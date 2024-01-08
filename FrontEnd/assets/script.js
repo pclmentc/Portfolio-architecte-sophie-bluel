@@ -12,7 +12,7 @@ fetch(apiCategories)
     })
     .then(data => {
         // Affichage du résultat dans la console
-        console.log('Réponse de l\'API :', data);
+        console.log('Type de catégories :', data);
 
         // Vous pouvez également effectuer d'autres opérations avec les données ici
     })
@@ -32,7 +32,7 @@ fetch(apiContenu)
     })
     .then(data => {
         // Affichage du résultat dans la console
-        console.log('Réponse de l\'API :', data);
+        console.log('Tous les éléments:', data);
 
         // Vous pouvez également effectuer d'autres opérations avec les données ici
     })
