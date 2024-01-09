@@ -30,7 +30,9 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background: #FFFEF8;
 }
+
 ol, ul {
 	list-style: none;
 }
@@ -61,7 +63,27 @@ header {
 section {
 	margin: 50px 0
 }
-
+button{
+	display: flex;
+	justify-content:center;
+	align-items: center;
+	font-family: 'Syne';
+	font-size: 16px;
+	text-align: center;
+	color: #1D6154;
+	background: #FFFEF8;
+	border-radius: 60px;
+	border: 1px solid #1D6154;
+	height: 37px;
+	padding-inline: 10px;
+	
+}
+#filters{
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	padding-block: 51px;
+}
 h1{
 	display: flex;
 	flex-direction: column;
@@ -123,10 +145,10 @@ li:hover {
 }
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
+	padding-top: 89px;	
 }
 .gallery {
-	width: 100%;
+	width: 100%;	
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-column-gap: 20px;
