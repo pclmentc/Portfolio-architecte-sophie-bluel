@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const url = "http://localhost:5678/api/works";
     const gallery = document.querySelector('.gallery');
+    const filterButtons = document.querySelectorAll('.filter-btn');
 
     const getArticles = () => {
         fetch(url)
