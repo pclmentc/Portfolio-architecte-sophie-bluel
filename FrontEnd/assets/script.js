@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const urlCategories = "http://localhost:5678/api/categories";
     const urlWorks = "http://localhost:5678/api/works";
     const gallery = document.querySelector('.gallery');
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.json();
             })
             .then(data => {
-                
+
                 // Sauvegarder les catégories pour une utilisation ultérieure
                 categories = data;
 
@@ -33,9 +33,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Ajout d'un écouteur d'événements à chaque bouton de filtre
                 const filterButtons = document.querySelectorAll('.filter-btn');
                 filterButtons.forEach(button => {
-                    button.addEventListener('click', function() {
+                    button.addEventListener('click', function () {
                         const category = this.getAttribute('data-category');
-                        console.log('Filtre sélectionné :', category);                        
+                        console.log('Filtre sélectionné :', category);
                         getArticles(category);
 
                         // Désélectionner tous les boutons, puis sélectionner celui cliqué
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 return response.json();
             })
-            .then(data => {                
+            .then(data => {
 
                 // Suppression des travaux préexistants du HTML
                 gallery.innerHTML = '';
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Ajout des nouveaux projets filtrés à la galerie
                 filteredProjects.forEach(project => {
                     const article = createArticleElement(project);
-                    gallery.appendChild(article);                    
+                    gallery.appendChild(article);
                 });
             })
             .catch(error => {
