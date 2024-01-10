@@ -78,6 +78,11 @@ button{
 	padding-inline: 10px;
 	
 }
+/* Changement de la couleur du filtre sélectionné */
+.filter-btn.selected {
+    background-color: #1D6154; 
+	color:#FFFEF8 ;
+}
 #filters{
 	display: flex;
 	justify-content: center;
