@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', (e) => {
     const urlCategories = "http://localhost:5678/api/categories";
     const urlWorks = "http://localhost:5678/api/works";
     const gallery = document.querySelector('.gallery');
@@ -16,34 +16,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             })
             .then(data => {
-
+                createButton({name: "Tous", id : undefined})
                 // Sauvegarder les catégories pour une utilisation ultérieure
                 categories = data;
-
                 // Ajout des boutons de filtre pour chaque catégorie
                 categories.forEach(category => {
-                    const button = document.createElement('button');
-                    button.classList.add('filter-btn');
-                    button.dataset.category = category.name;
-                    button.textContent = category.name;
-
-                    filterContainer.appendChild(button);
+                    createButton(category)
                 });
-
-                // Ajout d'un écouteur d'événements à chaque bouton de filtre
-                const filterButtons = document.querySelectorAll('.filter-btn');
-                filterButtons.forEach(button => {
-                    button.addEventListener('click', function () {
-                        const category = this.getAttribute('data-category');
-                        console.log('Filtre sélectionné :', category);
-                        getArticles(category);
-
-                        // Désélectionner tous les boutons, puis sélectionner celui cliqué
-                        filterButtons.forEach(btn => btn.classList.remove('selected'));
-                        this.classList.add('selected');
-                    });
-                });
-
                 // Appel initial pour afficher tous les projets
                 getArticles();
             })
@@ -52,8 +31,23 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     };
 
+    const createButton = (category) => {
+        const button = document.createElement('button');
+        button.classList.add('filter-btn');
+        button.dataset.category = category.name;
+        button.textContent = category.name;
+        button.addEventListener('click', (e) => {
+            filterContainer.querySelectorAll('button').forEach(btn => btn.classList.remove('selected'))
+            console.log(e)
+            button.classList.add('selected')
+            console.log('Filtre sélectionné :', category.name);
+            getArticles(category.id);
+        });
+        filterContainer.appendChild(button);
+    }
+
     // Fonction pour obtenir les articles depuis l'API en fonction de la catégorie
-    const getArticles = (category = 'all') => {
+    const getArticles = (categoryId) => {
         fetch(urlWorks)
             .then(response => {
                 if (!response.ok) {
@@ -67,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 gallery.innerHTML = '';
 
                 // Filtrage des projets par catégorie
-                const filteredProjects = (category === 'all') ? data : data.filter(project => getCategoryNameById(project.categoryId).name === category);
+                const filteredProjects = (!categoryId) ? data : data.filter(project => project.categoryId === categoryId);
 
                 // Ajout des nouveaux projets filtrés à la galerie
                 filteredProjects.forEach(project => {
@@ -79,12 +73,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error('Erreur lors de la récupération des projets :', error);
             });
     };
-
-    // Fonction pour obtenir le nom de catégorie à partir de l'ID de catégorie
-    function getCategoryNameById(categoryId) {
-        const category = categories.find(cat => cat.id === categoryId);
-        return category ? category : null;
-    }
 
     // Fonction pour créer un élément représentant un projet
     function createArticleElement(project) {
