@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
                 return response.json();
             })
             .then(data => {
-                createButton({name: "Tous", id : undefined})
+                createButton({name: "Tous", id : undefined, selected : true})
                 // Sauvegarder les catégories pour une utilisation ultérieure
                 categories = data;
                 // Ajout des boutons de filtre pour chaque catégorie
@@ -30,12 +30,15 @@ document.addEventListener('DOMContentLoaded', (e) => {
                 console.error('Erreur lors de la récupération des catégories :', error);
             });
     };
-
+// fonction pour la création de bouton pour les filtres
     const createButton = (category) => {
         const button = document.createElement('button');
         button.classList.add('filter-btn');
         button.dataset.category = category.name;
         button.textContent = category.name;
+        if (category.selected) {
+            button.classList.add('selected');
+        }
         button.addEventListener('click', (e) => {
             filterContainer.querySelectorAll('button').forEach(btn => btn.classList.remove('selected'))
             console.log(e)
@@ -75,7 +78,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
     };
 
     // Fonction pour créer un élément représentant un projet
-    function createArticleElement(project) {
+    const createArticleElement=(project)=> {
         const article = document.createElement('article');
 
         const img = document.createElement('img');
