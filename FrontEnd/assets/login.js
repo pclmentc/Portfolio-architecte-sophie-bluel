@@ -2,6 +2,9 @@
 const form = document.querySelector('form');
 const urlLogin = "http://localhost:5678/api/users/login";
 
+// Récupérer le token au chargement de la page, si déjà authentifié
+const token = window.localStorage.getItem('token');
+
 form.addEventListener("submit",async (event) => {
     //  gerer les erreurs et empecher le changement de page natif du form
     event.preventDefault();
@@ -38,7 +41,7 @@ form.addEventListener("submit",async (event) => {
 
             if (data.token) {
                 // Enregistrez le token dans le localStorage
-                localStorage.setItem('token', data.token);
+                window.localStorage.setItem('token', data.token);
                 console.log("Token enregistré dans le localStorage");
                 // Redirigez l'utilisateur vers une nouvelle page 
                 window.location.href ="index.html";                 
