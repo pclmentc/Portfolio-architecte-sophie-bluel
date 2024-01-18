@@ -39,14 +39,14 @@ form.addEventListener("submit",async (event) => {
             if (data.token) {
                 // Enregistrez le token dans le localStorage
                 localStorage.setItem('token', data.token);
-                console.log('Token enregistré dans le localStorage');
+                console.log("Token enregistré dans le localStorage");
                 // Redirigez l'utilisateur vers une nouvelle page 
-                window.location.href = '/accueil'; // À remplacer par l'URL correcte
+                window.location.href ="index.html";                 
             } else {
-                console.error('Aucun token trouvé dans la réponse du serveur');
+                console.error("Aucun token trouvé dans la réponse du serveur");
             }
         } else if (response.status === 401) {
-            console.error('Non autorisé - Vérifiez vos identifiants');
+            console.error("Non autorisé - Vérifiez vos identifiants");
             alert('Non autorisé - Vérifiez vos identifiants');
         } else if (response.status === 404) {
             console.error('Utilisateur non trouvé');
