@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Afficher le bandeau en mode édition
         editModeBanner.classList.remove('hidden');
         modLink.classList.remove('hidden');
+        filterContainer.style.visibility = 'hidden';
         
     } else {
         // L'utilisateur n'est pas connecté, laissez le texte du lien tel quel
