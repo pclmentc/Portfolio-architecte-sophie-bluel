@@ -6,7 +6,7 @@ const urlLogin = "http://localhost:5678/api/users/login";
 const token = window.localStorage.getItem('token');
 
 form.addEventListener("submit", async (event) => {
-    //  gerer les erreurs et empecher le changement de page natif du form
+    //  gerer les erreurs et empecher le changement de page natif 
     event.preventDefault();
 
     const email = document.getElementById("email").value;

@@ -1,8 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     const token = window.localStorage.getItem('token');
     const loginLogoutLink = document.getElementById('login-logout');
+    const modLink = document.getElementById('mod');
     const editModeBanner = document.getElementById('edit-mode-banner');
     const header = document.getElementById('header');
+    const filterContainer = document.getElementById('filters');
 
     if (token) {
         // L'utilisateur est connecté
@@ -23,18 +25,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         // Afficher le bandeau en mode édition
         editModeBanner.classList.remove('hidden');
+        modLink.classList.remove('hidden');
         
     } else {
         // L'utilisateur n'est pas connecté, laissez le texte du lien tel quel
         console.log("Utilisateur non connecté !");
         editModeBanner.classList.add('hidden');
+        modLink.classList.add('hidden');
         header.classList.remove('connected');
     }
 
     const urlCategories = "http://localhost:5678/api/categories";
     const urlWorks = "http://localhost:5678/api/works";
     const gallery = document.querySelector('.gallery');
-    const filterContainer = document.getElementById('filters');
+    // const filterContainer = document.getElementById('filters');
 
     let categories = [];
 

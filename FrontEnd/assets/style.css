@@ -240,6 +240,13 @@ h2 {
 	font-size: 30px;
 	color: #1D6154
 }
+#mod{
+	color: black;
+	font-family: 'Work Sans';
+	font-size: 14px;
+	padding-left: 29px;
+	
+}
 
 nav ul {
 	display: flex;
