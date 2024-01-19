@@ -5,19 +5,20 @@ document.addEventListener('DOMContentLoaded', (e) => {
     const header = document.getElementById('header');
 
     if (token) {
-        // L'utilisateur est connecté, mettez à jour le texte du lien
+        // L'utilisateur est connecté
         loginLogoutLink.innerHTML = '<a href="#" id="logout">logout</a>';
         header.classList.add('connected');
 
-        // Ajouter un gestionnaire d'événements pour la déconnexion
+        // la déconnexion
         const logoutLink = document.getElementById('logout');
         if (logoutLink) {
             logoutLink.addEventListener('click', () => {
                 // supprimez le token du localStorage
                 window.localStorage.removeItem('token');
                 console.log("suppression de l'accès")
-                // Redirigez l'utilisateur ou effectuez d'autres actions nécessaires après la déconnexion
+                // Redirigez l'utilisateur sur la page normal 
                 window.location.href = 'index.html';
+                alert("Vous êtes déconnectés")
             });
         }
         // Afficher le bandeau en mode édition

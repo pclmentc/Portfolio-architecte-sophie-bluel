@@ -44,7 +44,7 @@ form.addEventListener("submit", async (event) => {
                     console.log("Token enregistré dans le localStorage");
 
                     // Redirigez l'utilisateur vers une nouvelle page
-                    alert('Connexion réussie ! Bienvenue.');
+                    alert('Vous êtes connectés.');
                     window.location.href = "index.html";
 
 
