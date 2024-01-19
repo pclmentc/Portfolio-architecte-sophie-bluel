@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', (e) => {
+document.addEventListener('DOMContentLoaded', () => {
     const token = window.localStorage.getItem('token');
     const loginLogoutLink = document.getElementById('login-logout');
     const editModeBanner = document.getElementById('edit-mode-banner');
