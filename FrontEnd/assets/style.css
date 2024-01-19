@@ -247,6 +247,9 @@ h2 {
 	padding-left: 29px;
 	
 }
+#mod.hidden{
+	display: none;
+}
 
 nav ul {
 	display: flex;
