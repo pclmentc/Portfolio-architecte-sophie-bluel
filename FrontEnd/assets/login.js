@@ -5,7 +5,7 @@ const urlLogin = "http://localhost:5678/api/users/login";
 // Récupérer le token au chargement de la page, si déjà authentifié
 const token = window.localStorage.getItem('token');
 
-form.addEventListener("submit",async (event) => {
+form.addEventListener("submit", async (event) => {
     //  gerer les erreurs et empecher le changement de page natif du form
     event.preventDefault();
 
@@ -22,48 +22,64 @@ form.addEventListener("submit",async (event) => {
 
         // appeler le back avec une methode post en lui passant le payload
         try {
-            
             const response = await fetch(urlLogin, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: email,
-                password: password,
-            }),
-        });
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                }),
+            });
 
-        if (response.ok) {
-            // Analyser la réponse JSON
-            const data = await response.json();
+            if (response.ok) {
+                const data = await response.json();
+                console.log("Réponse du serveur:", data);
 
-            if (data.token) {
-                // Enregistrez le token dans le localStorage
-                window.localStorage.setItem('token', data.token);
-                console.log("Token enregistré dans le localStorage");
-                // Redirigez l'utilisateur vers une nouvelle page 
-                window.location.href ="index.html";                 
+                if (data.token) {
+                    // Enregistrez le token dans le localStorage
+                    window.localStorage.setItem('token', data.token);
+                    console.log("Token enregistré dans le localStorage");
+
+                    // Redirigez l'utilisateur vers une nouvelle page
+                    alert('Connexion réussie ! Bienvenue.');
+                    window.location.href = "index.html";
+
+
+                } else {
+                    console.error("Aucun token trouvé dans la réponse du serveur");
+                }
             } else {
-                console.error("Aucun token trouvé dans la réponse du serveur");
+                // Gérer les erreurs
+                handleError(response.status);
             }
-        } else if (response.status === 401) {
-            console.error("Non autorisé - Vérifiez vos identifiants");
+
+        } catch (error) {
+            console.error('Erreur lors de la requête au serveur:', error);
+        }
+
+    } else {
+        console.error('Email ou mot de passe non valide');
+        alert('Email ou mot de passe non valide');
+    }
+});
+
+// Fonction pour gérer les erreurs
+function handleError(status) {
+    switch (status) {
+        case 401:
+            console.error("Non autorisé");
             alert('Non autorisé - Vérifiez vos identifiants');
-        } else if (response.status === 404) {
+            break;
+        case 404:
             console.error('Utilisateur non trouvé');
             alert('Utilisateur non trouvé');
-        } else {
-            console.error('Erreur inattendue:', response.statusText);
+            break;
+        default:
+            console.error('Erreur inattendue:', status);
             alert('Erreur inattendue');
-        }
-    } catch (error) {
-        console.error('Erreur lors de la requête au serveur:', error);
+            break;
     }
-
-} else {
-    console.error('Email non valide');
-    alert('Email non valide');
 }
-});

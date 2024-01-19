@@ -1,4 +1,34 @@
 document.addEventListener('DOMContentLoaded', (e) => {
+    const token = window.localStorage.getItem('token');
+    const loginLogoutLink = document.getElementById('login-logout');
+    const editModeBanner = document.getElementById('edit-mode-banner');
+    const header = document.getElementById('header');
+
+    if (token) {
+        // L'utilisateur est connecté, mettez à jour le texte du lien
+        loginLogoutLink.innerHTML = '<a href="#" id="logout">logout</a>';
+        header.classList.add('connected');
+
+        // Ajouter un gestionnaire d'événements pour la déconnexion
+        const logoutLink = document.getElementById('logout');
+        if (logoutLink) {
+            logoutLink.addEventListener('click', () => {
+                // supprimez le token du localStorage
+                window.localStorage.removeItem('token');
+                console.log("suppression de l'accès")
+                // Redirigez l'utilisateur ou effectuez d'autres actions nécessaires après la déconnexion
+                window.location.href = 'index.html';
+            });
+        }
+        // Afficher le bandeau en mode édition
+        editModeBanner.classList.remove('hidden');
+    } else {
+        // L'utilisateur n'est pas connecté, laissez le texte du lien tel quel
+        console.log("Utilisateur non connecté !");
+        editModeBanner.classList.add('hidden');
+        header.classList.remove('connected');
+    }
+
     const urlCategories = "http://localhost:5678/api/categories";
     const urlWorks = "http://localhost:5678/api/works";
     const gallery = document.querySelector('.gallery');
@@ -16,7 +46,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
                 return response.json();
             })
             .then(data => {
-                createButton({name: "Tous", id : undefined, selected : true})
+                createButton({ name: "Tous", id: undefined, selected: true })
                 // Sauvegarder les catégories pour une utilisation ultérieure
                 categories = data;
                 // Ajout des boutons de filtre pour chaque catégorie
@@ -30,7 +60,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
                 console.error('Erreur lors de la récupération des catégories :', error);
             });
     };
-// fonction pour la création de bouton pour les filtres
+    // fonction pour la création de bouton pour les filtres
     const createButton = (category) => {
         const button = document.createElement('button');
         button.classList.add('filter-btn');
@@ -78,7 +108,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
     };
 
     // Fonction pour créer un élément représentant un projet
-    const createArticleElement=(project)=> {
+    const createArticleElement = (project) => {
         const article = document.createElement('article');
 
         const img = document.createElement('img');
