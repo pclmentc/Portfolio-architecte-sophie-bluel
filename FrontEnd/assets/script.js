@@ -130,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         return article;
     }
+    
 
     // Appel initial pour récupérer les catégories et afficher les projets
     getCategories();

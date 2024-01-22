@@ -108,6 +108,7 @@ section {
 }
 .errorMessage{
 	color: red;
+	font-size: larger;
 	padding-top: 15px;
 	text-decoration-line: underline;	
 }
