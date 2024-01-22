@@ -9,8 +9,8 @@ form.addEventListener("submit", async (event) => {
     //  gerer les erreurs et empecher le changement de page natif 
     event.preventDefault();
 
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    const email = document.querySelector("#email").value;
+    const password = document.querySelector("#password").value;
 
     // verifier les entrees user
     let regex = new RegExp("^[a-z0-9._-]+@[a-z0-9._-]{4,}\\.[a-z0-9._-]{3,}")
@@ -44,7 +44,7 @@ form.addEventListener("submit", async (event) => {
                     console.log("Token enregistré dans le localStorage");
 
                     // Redirigez l'utilisateur vers une nouvelle page
-                    alert('Vous êtes connectés.');
+                    // alert('Vous êtes connectés.');
                     window.location.href = "index.html";
 
 
@@ -62,7 +62,7 @@ form.addEventListener("submit", async (event) => {
 
     } else {
         console.error('Email ou mot de passe non valide');
-        alert('Email ou mot de passe non valide');
+        // alert('Email ou mot de passe non valide');
     }
 });
 
@@ -71,15 +71,15 @@ function handleError(status) {
     switch (status) {
         case 401:
             console.error("Non autorisé");
-            alert('Non autorisé - Vérifiez vos identifiants');
+            // alert('Non autorisé - Vérifiez vos identifiants');
             break;
         case 404:
             console.error('Utilisateur non trouvé');
-            alert('Utilisateur non trouvé');
+            // alert('Utilisateur non trouvé');
             break;
         default:
             console.error('Erreur inattendue:', status);
-            alert('Erreur inattendue');
+            // alert('Erreur inattendue');
             break;
     }
 }

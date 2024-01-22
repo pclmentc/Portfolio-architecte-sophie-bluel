@@ -1,18 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
     const token = window.localStorage.getItem('token');
-    const loginLogoutLink = document.getElementById('login-logout');
-    const modLink = document.getElementById('mod');
-    const editModeBanner = document.getElementById('edit-mode-banner');
-    const header = document.getElementById('header');
-    const filterContainer = document.getElementById('filters');
-
+    const loginLogoutLink = document.querySelector('#login-logout');
+    const modLink = document.querySelector('#mod');
+    const editModeBanner = document.querySelector('#edit-mode-banner');
+    const header = document.querySelector('#header');
+    const filterContainer = document.querySelector('#filters');
+    
     if (token) {
         // L'utilisateur est connecté
         loginLogoutLink.innerHTML = '<a href="#" id="logout">logout</a>';
         header.classList.add('connected');
 
         // la déconnexion
-        const logoutLink = document.getElementById('logout');
+        const logoutLink = document.querySelector('#logout');
         if (logoutLink) {
             logoutLink.addEventListener('click', () => {
                 // supprimez le token du localStorage
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log("suppression de l'accès")
                 // Redirigez l'utilisateur sur la page normal 
                 window.location.href = 'index.html';
-                alert("Vous êtes déconnectés")
+                // alert("Vous êtes déconnectés")
             });
         }
         // Afficher le bandeau en mode édition
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // const filterContainer = document.getElementById('filters');
 
     let categories = [];
-
+    
     // Fonction pour obtenir les catégories depuis l'API
     const getCategories = () => {
         fetch(urlCategories)
