@@ -61,7 +61,7 @@ form.addEventListener("submit", async (event) => {
         }
 
     } else {
-        console.error('Email ou mot de passe non valide');
+        console.error('Email ou mot de passe non valide');        
         // alert('Email ou mot de passe non valide');
     }
 });
@@ -72,13 +72,19 @@ function handleError(status) {
         case 401:
             console.error("Non autorisé");
             // alert('Non autorisé - Vérifiez vos identifiants');
+            var errorMessageElement = document.querySelector('.errorMessage');
+        errorMessageElement.textContent = "Échec de la connexion. Vérifiez vos informations d'identification.";
             break;
         case 404:
             console.error('Utilisateur non trouvé');
+            var errorMessageElement = document.querySelector('.errorMessage');
+            errorMessageElement.textContent = "Utilisateur non trouvé";
             // alert('Utilisateur non trouvé');
             break;
         default:
             console.error('Erreur inattendue:', status);
+            var errorMessageElement = document.querySelector('.errorMessage');
+            errorMessageElement.textContent = "Erreur inattendue";
             // alert('Erreur inattendue');
             break;
     }
