@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const editModeBanner = document.querySelector('#edit-mode-banner');
     const header = document.querySelector('#header');
     const filterContainer = document.querySelector('#filters');
-    
+
     if (token) {
         // L'utilisateur est connecté
         loginLogoutLink.innerHTML = '<a href="#" id="logout">logout</a>';
@@ -27,9 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
         editModeBanner.classList.remove('hidden');
         modLink.classList.remove('hidden');
         filterContainer.style.visibility = 'hidden';
-        
+
     } else {
-        // L'utilisateur n'est pas connecté, laissez le texte du lien tel quel
+        // L'utilisateur n'est pas connecté, rien changer.
         console.log("Utilisateur non connecté !");
         editModeBanner.classList.add('hidden');
         modLink.classList.add('hidden');
@@ -39,10 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const urlCategories = "http://localhost:5678/api/categories";
     const urlWorks = "http://localhost:5678/api/works";
     const gallery = document.querySelector('.gallery');
-    // const filterContainer = document.getElementById('filters');
 
     let categories = [];
-    
+
     // Fonction pour obtenir les catégories depuis l'API
     const getCategories = () => {
         fetch(urlCategories)
@@ -130,8 +129,82 @@ document.addEventListener('DOMContentLoaded', () => {
 
         return article;
     }
-    
 
     // Appel initial pour récupérer les catégories et afficher les projets
     getCategories();
+    
+    // Modale
+    const btn = document.querySelector('#mod');
+    let modalStep = 0;
+    const categoryMap = { objets: 1, appartements: 2, hotelsrestos: 3 };
+
+    btn.addEventListener("click", () => {
+        UpdateModal();
+    });
+
+    function createElement(tag, className, textContent) {
+        const element = document.createElement(tag);
+        if (className) element.classList.add(className);
+        if (textContent) element.textContent = textContent;
+        return element;
+    }
+
+    function UpdateModal() {
+        if (document.querySelector(".modal")) document.querySelector(".modal").remove();
+        const modal = createElement("div", "modal");
+        const modalContent = createElement("div", "modal-content");
+
+        const modalBtn = createElement(
+            "button",
+            modalStep === 0 ? "next-btn" : "previous-btn",
+            modalStep === 0 ? "Next" : "Previous"
+        );
+        modalBtn.addEventListener("click", () => {
+            modalStep += modalStep === 0 ? 1 : -1;
+            UpdateModal();
+        });
+
+        const modalClose = createElement("button", "close-btn", null);
+        const iconClose = createElement("i", "fas", null);
+        iconClose.classList.add("fa-close");
+        modalClose.appendChild(iconClose);
+        modalClose.addEventListener("click", () => {
+            document.querySelector(".modal").remove();
+            modalStep = 0;
+        });
+
+        switch (modalStep) {
+            case 0:
+                modalContent.appendChild(
+                    createElement("h1", "modal-title", "Modal Title")
+                );
+                modalContent.appendChild(createElement("p", "modal-text", "Modal Text"));
+                break;
+            case 1:
+                modalContent.appendChild(
+                    createElement("input", "modal-input", null)
+                ).type = "file";
+                modalContent.appendChild(
+                    createElement("input", "modal-input", null)
+                ).placeholder = "Title";
+                const modalSelectCategory = createElement("select", "modal-input");
+                for (const category in categoryMap) {
+                    const option = createElement("option");
+                    option.value = categoryMap[category];
+                    option.textContent = category;
+                    modalSelectCategory.appendChild(option);
+                }
+                modalContent.appendChild(modalSelectCategory);
+                break;
+            default:
+                document.querySelector(".modal").remove();
+                modalStep = 0;
+                break;
+        }
+
+        modalContent.appendChild(modalBtn);
+        modalContent.appendChild(modalClose);
+        modal.appendChild(modalContent);
+        document.body.appendChild(modal);
+    }
 });
