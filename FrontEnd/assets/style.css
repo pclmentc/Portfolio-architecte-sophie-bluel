@@ -377,27 +377,30 @@ footer nav ul {
 
 .modal{
 	position: absolute;
-	top: 155%;
+	top: 115%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	z-index: 999;
 	width: 630px;
 	height: 688px;
-	background: #f2f2f2;
+	background: #FFFFFF;
 	display: flex;
-	justify-content: center;
-	align-items: center;
+	justify-content: center;	
 	border-radius: 10px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-	padding: 20px;
+	padding: 60px;
   }
   
   .modal-content {
   }
   
   .modal-title {
-	font-size: 1.5rem;
+	font-size: 26px;
+	font-family:'Work Sans'; 
+	color: black;
+	text-align: center;
 	margin-bottom: 10px;
+	font-weight: 400;
   }
   
   .modal-text {
@@ -413,11 +416,11 @@ footer nav ul {
   
   .next-btn,
   .previous-btn {
-	background-color: #007bff;
+	background-color: #1D6154;
 	color: #fff;
 	padding: 10px 15px;
 	border: none;
-	border-radius: 5px;
+	border-radius: 25px;
 	cursor: pointer;
 	font-size: 1rem;
 	margin-right: 10px;
@@ -425,15 +428,19 @@ footer nav ul {
   
   .close-btn {	
 	position: absolute;
-	top: 0;
-	right: 0;
+	background: #FFFFFF;
+	top: 15px;
+	right: 15px;
 	margin:0;
+	border-radius: 0;
+	border: none;
+	font-size: 24px;
   } 
   
   
   .next-btn:hover,
   .previous-btn:hover {
-	background-color: #0056b3;
+	background-color: #1D6154;
   }
   
   /* Hide the file input button text */
@@ -450,7 +457,7 @@ footer nav ul {
 	position: absolute;
 	left: 0;
 	width: 100%;
-	background: #007bff;
+	background: #1D6154;
 	color: #fff;
 	padding: 8px 12px;
 	border-radius: 5px;

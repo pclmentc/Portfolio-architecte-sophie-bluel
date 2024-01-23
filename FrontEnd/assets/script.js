@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Appel initial pour récupérer les catégories et afficher les projets
     getCategories();
-    
+
     // Modale
     const btn = document.querySelector('#mod');
     let modalStep = 0;
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const modalBtn = createElement(
             "button",
             modalStep === 0 ? "next-btn" : "previous-btn",
-            modalStep === 0 ? "Next" : "Previous"
+            modalStep === 0 ? "Ajouter une photo" : "Previous"
         );
         modalBtn.addEventListener("click", () => {
             modalStep += modalStep === 0 ? 1 : -1;
@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
         switch (modalStep) {
             case 0:
                 modalContent.appendChild(
-                    createElement("h1", "modal-title", "Modal Title")
+                    createElement("h1", "modal-title", "Galerie photo")
                 );
                 modalContent.appendChild(createElement("p", "modal-text", "Modal Text"));
                 break;
