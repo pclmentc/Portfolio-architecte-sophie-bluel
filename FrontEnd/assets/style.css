@@ -374,7 +374,7 @@ footer nav ul {
 	justify-content: flex-end;
 	margin: 2em
 }
-
+/* modal */
 .modal{
 	position: absolute;
 	top: 115%;
@@ -391,8 +391,8 @@ footer nav ul {
 	padding: 60px;
   }
   
-  .modal-content {
-  }
+  /* .modal-content {
+  } */
   
   .modal-title {
 	font-size: 26px;

@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Modale
     const btn = document.querySelector('#mod');
     let modalStep = 0;
-    const categoryMap = { objets: 1, appartements: 2, hotelsrestos: 3 };
+    const categoryMap = { Objets: 1, Appartements: 2, Hotels_Restaurants: 3 };
 
     btn.addEventListener("click", () => {
         UpdateModal();
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const modalBtn = createElement(
             "button",
             modalStep === 0 ? "next-btn" : "previous-btn",
-            modalStep === 0 ? "Ajouter une photo" : "Previous"
+            modalStep === 0 ? "Ajouter une photo" :"Retour",
         );
         modalBtn.addEventListener("click", () => {
             modalStep += modalStep === 0 ? 1 : -1;
