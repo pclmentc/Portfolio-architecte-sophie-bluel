@@ -255,6 +255,12 @@ h2 {
 #mod.hidden{
 	display: none;
 }
+.file-title{
+	color: black;
+	font-family: 'Work Sans';
+	font-size: 14px;
+	padding-bottom: 10px;	
+}
 
 nav ul {
 	display: flex;
@@ -429,6 +435,7 @@ footer nav ul {
   .close-btn {	
 	position: absolute;
 	background: #FFFFFF;
+	color: black;
 	top: 15px;
 	right: 15px;
 	margin:0;
