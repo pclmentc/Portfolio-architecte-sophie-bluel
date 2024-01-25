@@ -197,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
         modalContent.appendChild(createElement("h1", "file-title", "Titre"));
         modalContent.appendChild(createElement("input", "modal-input", null)).placeholder = "";
         modalContent.appendChild(createElement("h1", "file-title", "Catégorie"));
-        const modalSelectCategory = createElement("select", "modal-input");
+        const modalSelectCategory = createElement("select", "modal-input");        
 
         // Ajouter la première option par défaut avec le titre "Catégorie"
         const defaultOption = createElement("option");
@@ -214,11 +214,13 @@ document.addEventListener("DOMContentLoaded", () => {
           modalSelectCategory.appendChild(option);
         }
         modalContent.appendChild(modalSelectCategory);
+        modalContent.appendChild(createElement("hr", "modal-text", ""));
         break;
       default:
         document.querySelector(".modal").remove();
         modalStep = 0;
         break;
+        
     }
 
     modalContent.appendChild(modalBtn);

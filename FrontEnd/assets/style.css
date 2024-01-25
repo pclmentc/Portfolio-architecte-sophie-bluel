@@ -261,7 +261,7 @@ h2 {
 }
 
 .file-title {
-	color: black;
+	color: #3D3D3D;
 	font-family: 'Work Sans';
 	font-size: 14px;
 	padding-bottom: 10px;
@@ -412,8 +412,7 @@ footer nav ul {
 }
 
 .modal-text {
-	width: 420px;
-	height: 1px;
+	width: 420px;	
 	background: #B3B3B3;
 	margin-bottom: 38px;
 }
@@ -423,6 +422,12 @@ footer nav ul {
 	padding: 10px;
 	margin-bottom: 15px;
 	box-sizing: border-box;
+	background: #FFF;
+    box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+	border: 1px solid transparent;
+}
+.modal-input:focus{
+	outline: none;
 }
 
 .next-btn,
