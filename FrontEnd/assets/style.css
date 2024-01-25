@@ -453,21 +453,20 @@ footer nav ul {
   /* Hide the file input button text */
   input[type="file"] {
 	font-size: 1em;
-	position: relative;
-	width: 90%;
+	position: relative;	
+	
   }
   
   /* Style the file input button */
   input[type="file"]::before {
-	content: "Choose File";
+	content: "+ Ajouter une photo";
 	display: flex;
 	position: absolute;
-	left: 0;
-	width: 100%;
-	background: #1D6154;
-	color: #fff;
+	left: 0;	
+	background: #CBD6DC;
+	color:#306685;
 	padding: 8px 12px;
-	border-radius: 5px;
+	border-radius: 50px;
 	cursor: pointer;
   }
   
