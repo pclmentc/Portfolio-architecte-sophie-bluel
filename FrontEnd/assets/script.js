@@ -238,13 +238,23 @@ const getAllImages = (container) => {
       .then((data) => {
           // Ajout des nouvelles images à la section
           data.forEach((project) => {
-              const img = document.createElement("img");
-              img.src = project.imageUrl;
-              img.alt = project.title;
-              container.appendChild(img);
-          });
-      })
-      .catch((error) => {
-          console.error("Erreur lors de la récupération des projets :", error);
-      });
+            const imgContainer = document.createElement("div");
+            imgContainer.classList.add("image-container");
+
+            const img = document.createElement("img");
+            img.src = project.imageUrl;
+            img.alt = project.title;
+            imgContainer.appendChild(img);
+
+            const icon = document.createElement("i");
+            icon.classList.add("fas", "fa-trash-can"); 
+            imgContainer.appendChild(icon);
+
+            container.appendChild(imgContainer);
+        });
+    })
+    .catch((error) => {
+        console.error("Erreur lors de la récupération des projets :", error);
+    });
+
   }})

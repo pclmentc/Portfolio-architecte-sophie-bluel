@@ -499,3 +499,26 @@ input[type="file"]::before {
 .all-images img{
 	width: 100%;
 }
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+.fa{
+	display:none;
+	width: 9px;
+	height: 11px;
+
+}
+.fa-trash-can {
+	background-color: black;
+	color: #fff;	
+    position: absolute;
+    top: 0;
+    right: 0;    
+	align-items: center;
+    justify-content: center;
+    display: flex;
+    padding: 3px;
+    margin: 3px;
+    
+}
