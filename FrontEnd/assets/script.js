@@ -247,9 +247,14 @@ const getAllImages = (container) => {
             imgContainer.appendChild(img);
 
             const icon = document.createElement("i");
-            icon.classList.add("fas", "fa-trash-can"); 
-            imgContainer.appendChild(icon);
+            icon.classList.add("fas", "fa-trash-can");
+            icon.addEventListener("click", () => {
+              // Appel de la fonction pour supprimer l'article en utilisant l'ID du projet            
+              console.log("ID du projet sélectionné pour suppression :", project.id);
+              deleteArticle(project.id);
+          });
 
+            imgContainer.appendChild(icon);
             container.appendChild(imgContainer);
         });
     })
@@ -257,4 +262,28 @@ const getAllImages = (container) => {
         console.error("Erreur lors de la récupération des projets :", error);
     });
 
-  }})
+  }
+   // Fonction pour supprimer un article en utilisant son ID
+const deleteArticle = (articleId) => {
+  console.log("Suppression de l'article avec l'ID :", articleId);
+    const deleteUrl = `http://localhost:5678/api/works/${articleId}`;
+
+    fetch(deleteUrl, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            
+        },
+    })
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP, statut : ${response.status}`);
+        }
+        // Actualisez la galerie après la suppression si nécessaire
+        getArticles();
+    })
+    .catch((error) => {
+        console.error("Erreur lors de la suppression de l'article :", error);
+    });
+}
+})
