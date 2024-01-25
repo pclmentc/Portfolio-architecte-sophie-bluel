@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
   getCategories();
 
   // Modale
-  
+
   const btn = document.querySelector("#mod");
   let modalStep = 0;
   const categoryMap = { Objets: 1, Appartements: 2, Hotels_Restaurants: 3 };
@@ -158,7 +158,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const modal = createElement("div", "modal");
     const modalContent = createElement("div", "modal-content");
 
-    const modalBtn = createElement("button",
+    const modalBtn = createElement(
+      "button",
       modalStep === 0 ? "next-btn" : "previous-btn",
       modalStep === 0 ? "Ajouter une photo" : "Retour"
     );
@@ -177,13 +178,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     switch (modalStep) {
-
       case 0:
-        modalContent.appendChild(createElement("h1", "modal-title", "Galerie photo"));        
+        modalContent.appendChild(
+          createElement("h1", "modal-title", "Galerie photo")
+        );
 
         // Ajouter ici la section pour afficher tous les img
         const allImages = document.createElement("div");
-            allImages.classList.add("all-images");
+        allImages.classList.add("all-images");
 
         // Appeler la fonction pour obtenir tous les img
         getAllImages(allImages);
@@ -193,11 +195,17 @@ document.addEventListener("DOMContentLoaded", () => {
         break;
 
       case 1:
-        modalContent.appendChild(createElement("input", "modal-input", null)).type = "file";
+        modalContent.appendChild(
+          createElement("input", "modal-input", null)
+        ).type = "file";
         modalContent.appendChild(createElement("h1", "file-title", "Titre"));
-        modalContent.appendChild(createElement("input", "modal-input", null)).placeholder = "";
-        modalContent.appendChild(createElement("h1", "file-title", "Catégorie"));
-        const modalSelectCategory = createElement("select", "modal-input");        
+        modalContent.appendChild(
+          createElement("input", "modal-input", null)
+        ).placeholder = "";
+        modalContent.appendChild(
+          createElement("h1", "file-title", "Catégorie")
+        );
+        const modalSelectCategory = createElement("select", "modal-input");
 
         // Ajouter la première option par défaut avec le titre "Catégorie"
         const defaultOption = createElement("option");
@@ -220,7 +228,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector(".modal").remove();
         modalStep = 0;
         break;
-        
     }
 
     modalContent.appendChild(modalBtn);
@@ -229,68 +236,70 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(modal);
   }
   // Fonction pour obtenir toutes les images
-const getAllImages = (container) => {
-  fetch(urlWorks)
+  const getAllImages = (container) => {
+    fetch(urlWorks)
       .then((response) => {
-          if (!response.ok) {
-              throw new Error(`Erreur HTTP, statut : ${response.status}`);
-          }
-          return response.json();
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP, statut : ${response.status}`);
+        }
+        return response.json();
       })
       .then((data) => {
-          // Ajout des nouvelles images à la section
-          data.forEach((project) => {
-            const imgContainer = document.createElement("div");
-            imgContainer.classList.add("image-container");
+        // Ajout des nouvelles images à la section
+        data.forEach((project) => {
+          const imgContainer = document.createElement("div");
+          imgContainer.classList.add("image-container");
 
-            const img = document.createElement("img");
-            img.src = project.imageUrl;
-            img.alt = project.title;
-            imgContainer.appendChild(img);
+          const img = document.createElement("img");
+          img.src = project.imageUrl;
+          img.alt = project.title;
+          imgContainer.appendChild(img);
 
-            const icon = document.createElement("i");
-            icon.classList.add("fas", "fa-trash-can");
+          const icon = document.createElement("i");
+          icon.classList.add("fas", "fa-trash-can");
 
-            icon.addEventListener("click", () => {
-              const confirmation = window.confirm("Êtes-vous sûr de vouloir supprimer cet article?");
-              if (confirmation) {
-                console.log("ID du projet sélectionné pour suppression :", project.id);
-                // Appel de la fonction pour supprimer l'article en utilisant l'ID du projet
-                deleteArticle(project.id);
+          icon.addEventListener("click", () => {
+            const confirmation = window.confirm(
+              "Êtes-vous sûr de vouloir supprimer cet article?"
+            );
+            if (confirmation) {
+              console.log(
+                "ID du projet sélectionné pour suppression :",
+                project.id
+              );
+              // Appel de la fonction pour supprimer l'article en utilisant l'ID du projet
+              deleteArticle(project.id);
             }
-        });             
-          
+          });
 
-            imgContainer.appendChild(icon);
-            container.appendChild(imgContainer);
+          imgContainer.appendChild(icon);
+          container.appendChild(imgContainer);
         });
-    })
-    .catch((error) => {
+      })
+      .catch((error) => {
         console.error("Erreur lors de la récupération des projets :", error);
-    });
-
-  }
-   // Fonction pour supprimer un article en utilisant son ID
-const deleteArticle = (articleId) => {
-  console.log("Suppression de l'article avec l'ID :", articleId);
+      });
+  };
+  // Fonction pour supprimer un article en utilisant son ID
+  const deleteArticle = (articleId) => {
+    console.log("Suppression de l'article avec l'ID :", articleId);
     const deleteUrl = `http://localhost:5678/api/works/${articleId}`;
 
     fetch(deleteUrl, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-            
-        },
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
-    .then((response) => {
+      .then((response) => {
         if (!response.ok) {
-            throw new Error(`Erreur HTTP, statut : ${response.status}`);
+          throw new Error(`Erreur HTTP, statut : ${response.status}`);
         }
         // Actualisez la galerie après la suppression si nécessaire
         getArticles();
-    })
-    .catch((error) => {
+      })
+      .catch((error) => {
         console.error("Erreur lors de la suppression de l'article :", error);
-    });
-}
-})
+      });
+  };
+});
