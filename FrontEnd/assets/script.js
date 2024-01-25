@@ -259,6 +259,7 @@ document.addEventListener("DOMContentLoaded", () => {
           icon.classList.add("fas", "fa-trash-can");
 
           icon.addEventListener("click", () => {
+            // Message de confirmation
             const confirmation = window.confirm(
               "Êtes-vous sûr de vouloir supprimer cet article?"
             );
@@ -282,13 +283,22 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   // Fonction pour supprimer un article en utilisant son ID
   const deleteArticle = (articleId) => {
+    // Vérifier si le token est valide
+  const token = window.localStorage.getItem("token");
+
+  if (!token) {
+    console.error("Token non valide. L'utilisateur n'est pas authentifié.");
+    return;
+  }
     console.log("Suppression de l'article avec l'ID :", articleId);
+
     const deleteUrl = `http://localhost:5678/api/works/${articleId}`;
 
     fetch(deleteUrl, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => {
