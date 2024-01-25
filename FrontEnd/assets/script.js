@@ -250,11 +250,16 @@ const getAllImages = (container) => {
 
             const icon = document.createElement("i");
             icon.classList.add("fas", "fa-trash-can");
+
             icon.addEventListener("click", () => {
-              // Appel de la fonction pour supprimer l'article en utilisant l'ID du projet            
-              console.log("ID du projet sélectionné pour suppression :", project.id);
-              deleteArticle(project.id);
-          });
+              const confirmation = window.confirm("Êtes-vous sûr de vouloir supprimer cet article?");
+              if (confirmation) {
+                console.log("ID du projet sélectionné pour suppression :", project.id);
+                // Appel de la fonction pour supprimer l'article en utilisant l'ID du projet
+                deleteArticle(project.id);
+            }
+        });             
+          
 
             imgContainer.appendChild(icon);
             container.appendChild(imgContainer);
