@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const btn = document.querySelector("#mod");
   let modalStep = 0;
-  const categoryMap = { Objets: 1, Appartements: 2, Hotels_Restaurants: 3 }; // rendre ceci dynamique
+  // const categoryMap = { Objets: 1, Appartements: 2, Hotels_Restaurants: 3 }; // rendre ceci dynamique
 
   btn.addEventListener("click", () => {
     UpdateModal();
@@ -214,20 +214,15 @@ function UpdateModal() {
       modalContent.appendChild(createElement("h1", "file-title", "Catégorie"));
       const modalSelectCategory = createElement("select", "modal-input");
 
-      // Ajouter la première option par défaut avec le titre "Catégorie"
-      const defaultOption = createElement("option");
-      defaultOption.value = "";
-      defaultOption.text = "";
-      defaultOption.disabled = false;
-      defaultOption.selected = false;
-      modalSelectCategory.appendChild(defaultOption);
-
-      for (const category in categoryMap) {
+      
+      // Utiliser une boucle forEach pour itérer sur les catégories de façon dynamique
+      categories.forEach((category) => {
         const option = createElement("option");
-        option.value = categoryMap[category];
-        option.textContent = category;
+        option.value = category.id;  
+        option.textContent = category.name;
         modalSelectCategory.appendChild(option);
-      }
+      });
+
       modalContent.appendChild(modalSelectCategory);
       modalContent.appendChild(createElement("hr", "modal-text", ""));
       modalContent.appendChild(createElement("button", "modalValid","Valider"));        
