@@ -265,15 +265,13 @@ const getAllImages = (container) => {
         icon.classList.add("fas", "fa-trash-can");
 
         icon.addEventListener("click", () => {
+          console.log("ID du projet sélectionné pour suppression :",project.id);
           // Message de confirmation
           const confirmation = window.confirm(
             "Êtes-vous sûr de vouloir supprimer cet article?"
           );
           if (confirmation) {
-            console.log(
-              "ID du projet sélectionné pour suppression :",
-              project.id
-            );
+            console.log("ID du projet sélectionné pour suppression :",project.id);
             // Appel de la fonction pour supprimer l'article en utilisant l'ID du projet
             deleteArticle(project.id);
           }
@@ -288,7 +286,7 @@ const getAllImages = (container) => {
     });
 };
 // Fonction pour supprimer un article en utilisant son ID
-const deleteArticle = (articleId) => {
+const deleteArticle = (articleId) => {  
   // Vérifier si le token est valide
   const token = window.localStorage.getItem("token");
 
