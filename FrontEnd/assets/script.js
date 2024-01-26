@@ -56,8 +56,9 @@ document.addEventListener("DOMContentLoaded", () => {
         // Sauvegarder les catégories pour une utilisation ultérieure
         categories = data;
         // Ajout des boutons de filtre pour chaque catégorie
-        categories.forEach((category) => {createButton(category);
-           });
+        categories.forEach((category) => {
+          createButton(category);
+        });
         // Appel initial pour afficher tous les projets
         getArticles();
       })
@@ -160,160 +161,172 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const modalBtn = createElement("button", modalStep === 0 ? "next-btn" : "previous-btn");
     if (modalStep === 0) {
-      modalBtn.textContent = "Ajouter une photo";       
-          
+      modalBtn.textContent = "Ajouter une photo";
+
 
     } else {
-      const iconNext = createElement("i", "fas",null);
+      const iconNext = createElement("i", "fas", null);
       iconNext.classList.add("fa-arrow-left");
       modalBtn.appendChild(iconNext);
-    }      
-    
-modalBtn.addEventListener("click", () => {
-  modalStep += modalStep === 0 ? 1 : -1;
-  UpdateModal();
-});
-
-const modalClose = createElement("button", "close-btn", null);
-const iconClose = createElement("i", "fas", null);
-iconClose.classList.add("fa-close");
-modalClose.appendChild(iconClose);
-modalClose.addEventListener("click", () => {
-  document.querySelector(".modal").remove();
-  modalStep = 0;
-});
-
-switch (modalStep) {
-  case 0:
-    modalContent.appendChild(
-      createElement("h1", "modal-title", "Galerie photo")
-    );
-
-    // Ajouter ici la section pour afficher tous les img
-    const allImages = document.createElement("div");
-    allImages.classList.add("all-images");
-
-    // Appeler la fonction pour obtenir tous les img
-    getAllImages(allImages);
-
-    modalContent.appendChild(allImages);
-    modalContent.appendChild(createElement("hr", "modal-text", ""));
-    break;
-
-  case 1:
-    modalContent.appendChild(createElement("h1", "modal-title", "Ajout photo"));
-    modalContent.appendChild(createElement("input", "modal-input", null)).type = "file";
-    modalContent.appendChild(createElement("h1", "file-title", "Titre"));
-    modalContent.appendChild(createElement("input", "modal-input", null)).placeholder = "";
-    modalContent.appendChild(createElement("h1", "file-title", "Catégorie"));
-    const modalSelectCategory = createElement("select", "modal-input");
-
-    // Ajouter la première option par défaut avec le titre "Catégorie"
-    const defaultOption = createElement("option");
-    defaultOption.value = "";
-    defaultOption.text = "";
-    defaultOption.disabled = true;
-    defaultOption.selected = true;
-    modalSelectCategory.appendChild(defaultOption);
-
-    for (const category in categoryMap) {
-      const option = createElement("option");
-      option.value = categoryMap[category];
-      option.textContent = category;
-      modalSelectCategory.appendChild(option);
     }
-    modalContent.appendChild(modalSelectCategory);
-    modalContent.appendChild(createElement("hr", "modal-text", ""));
-    modalContent.appendChild(createElement("button", "modalValid","Valider"));        
-    break;
 
-  default:
-    document.querySelector(".modal").remove();
-    modalStep = 0;
-    break;
-}
+    modalBtn.addEventListener("click", () => {
+      modalStep += modalStep === 0 ? 1 : -1;
+      UpdateModal();
+    });
 
-modalContent.appendChild(modalBtn);
-modalContent.appendChild(modalClose);
-modal.appendChild(modalContent);
-document.body.appendChild(modal);
-}
+    const modalClose = createElement("button", "close-btn", null);
+    const iconClose = createElement("i", "fas", null);
+    iconClose.classList.add("fa-close");
+    modalClose.appendChild(iconClose);
+    modalClose.addEventListener("click", () => {
+      document.querySelector(".modal").remove();
+      modalStep = 0;
+    });
 
-const validateButton = createElement("button", "modalValid", "Valider");
+    switch (modalStep) {
 
-// Fonction pour obtenir toutes les images
-const getAllImages = (container) => {
-  fetch(urlWorks)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Erreur HTTP, statut : ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      // Ajout des nouvelles images à la section
-      data.forEach((project) => {
-        const imgContainer = document.createElement("div");
-        imgContainer.classList.add("image-container");
+      case 0:
+        modalContent.appendChild(createElement("h1", "modal-title", "Galerie photo"));
 
-        const img = document.createElement("img");
-        img.src = project.imageUrl;
-        img.alt = project.title;
-        imgContainer.appendChild(img);
+        // Ajouter ici la section pour afficher tous les img
+        const allImages = document.createElement("div");
+        allImages.classList.add("all-images");
 
-        const icon = document.createElement("i");
-        icon.classList.add("fas", "fa-trash-can");
+        // Appeler la fonction pour obtenir tous les img
+        getAllImages(allImages);
 
-        icon.addEventListener("click", () => {
-          console.log("ID du projet sélectionné pour suppression :",project.id);
-          // Message de confirmation
-          const confirmation = window.confirm(
-            "Êtes-vous sûr de vouloir supprimer cet article?"
-          );
-          if (confirmation) {
-            console.log("ID du projet sélectionné pour suppression :",project.id);
-            // Appel de la fonction pour supprimer l'article en utilisant l'ID du projet
-            deleteArticle(project.id);
+        modalContent.appendChild(allImages);
+        modalContent.appendChild(createElement("hr", "modal-text", ""));
+        break;
+
+      case 1:
+        modalContent.appendChild(createElement("h1", "modal-title", "Ajout photo"));
+        // Ajouter une image par défaut
+        const defaultImage = createElement("img", "default-image");
+        defaultImage.src = "./assets/icons/fichier_emplacement.svg";
+        const fileInput = createElement("input", "modal-input", null);
+        fileInput.type = "file";
+        fileInput.accept = ".jpg, .jpeg, .png";  // Préciser les formats acceptés
+        fileInput.addEventListener("change", handleFileSelect);
+        fileInput.setAttribute("size", 4 * 1024 * 1024);// Taille maximale  4 Mo
+        modalContent.appendChild(fileInput);
+
+        // Ajouter un paragraphe pour les précisions sur les formats et la taille
+        const formatInfoParagraph = createElement("p", "file-info", "Formats acceptés : JPG, JPEG, PNG. Taille maximale : 4 Mo.");
+        modalContent.appendChild(formatInfoParagraph);
+        
+        // Ajouter cette fonction pour gérer la sélection de fichier et mettre à jour l'image
+        function handleFileSelect(event) {
+          const fileInput = event.target;
+          const defaultImage = document.querySelector(".default-image");
+          const formatInfoParagraph = document.querySelector(".file-info");
+
+          if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+              // Mettre à jour l'image avec le fichier sélectionné
+              defaultImage.src = e.target.result;
+
+              // Mettre à jour le paragraphe avec le nom du fichier
+              formatInfoParagraph.textContent = `Fichier sélectionné : ${fileInput.files[0].name}`;
+            };
+
+            reader.readAsDataURL(fileInput.files[0]);
           }
-        });
+        }
 
-        imgContainer.appendChild(icon);
-        container.appendChild(imgContainer);
-      });
-    })
-    .catch((error) => {
-      console.error("Erreur lors de la récupération des projets :", error);
-    });
-};
-// Fonction pour supprimer un article en utilisant son ID
-const deleteArticle = (articleId) => {  
-  // Vérifier si le token est valide
-  const token = window.localStorage.getItem("token");
+        modalContent.appendChild(defaultImage);
+        break;
 
-  if (!token) {
-    console.error("Token non valide. L'utilisateur n'est pas authentifié.");
-    return;
+      default:
+        document.querySelector(".modal").remove();
+        modalStep = 0;
+        break;
+    }
+
+    modalContent.appendChild(modalBtn);
+    modalContent.appendChild(modalClose);
+    modal.appendChild(modalContent);
+    document.body.appendChild(modal);
   }
-  console.log("Suppression de l'article avec l'ID :", articleId);
 
-  const deleteUrl = `http://localhost:5678/api/works/${articleId}`;
+  const validateButton = createElement("button", "modalValid", "Valider");
 
-  fetch(deleteUrl, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Erreur HTTP, statut : ${response.status}`);
-      }
-      // Actualisez la galerie après la suppression si nécessaire
-      getArticles();
+  // Fonction pour obtenir toutes les images
+  const getAllImages = (container) => {
+    fetch(urlWorks)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP, statut : ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Ajout des nouvelles images à la section
+        data.forEach((project) => {
+          const imgContainer = document.createElement("div");
+          imgContainer.classList.add("image-container");
+
+          const img = document.createElement("img");
+          img.src = project.imageUrl;
+          img.alt = project.title;
+          imgContainer.appendChild(img);
+
+          const icon = document.createElement("i");
+          icon.classList.add("fas", "fa-trash-can");
+
+          icon.addEventListener("click", () => {
+            console.log("ID du projet sélectionné pour suppression :", project.id);
+            // Message de confirmation
+            const confirmation = window.confirm(
+              "Êtes-vous sûr de vouloir supprimer cet article?"
+            );
+            if (confirmation) {
+              console.log("ID du projet sélectionné pour suppression :", project.id);
+              // Appel de la fonction pour supprimer l'article en utilisant l'ID du projet
+              deleteArticle(project.id);
+            }
+          });
+
+          imgContainer.appendChild(icon);
+          container.appendChild(imgContainer);
+        });
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la récupération des projets :", error);
+      });
+  };
+  // Fonction pour supprimer un article en utilisant son ID
+  const deleteArticle = (articleId) => {
+    // Vérifier si le token est valide
+    const token = window.localStorage.getItem("token");
+
+    if (!token) {
+      console.error("Token non valide. L'utilisateur n'est pas authentifié.");
+      return;
+    }
+    console.log("Suppression de l'article avec l'ID :", articleId);
+
+    const deleteUrl = `http://localhost:5678/api/works/${articleId}`;
+
+    fetch(deleteUrl, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     })
-    .catch((error) => {
-      console.error("Erreur lors de la suppression de l'article :", error);
-    });
-};
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP, statut : ${response.status}`);
+        }
+        // Actualisez la galerie après la suppression si nécessaire
+        getArticles();
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la suppression de l'article :", error);
+      });
+  };
 });
