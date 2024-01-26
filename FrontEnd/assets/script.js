@@ -201,7 +201,8 @@ switch (modalStep) {
     break;
 
   case 1:
-    modalContent.appendChild(createElement("h1", "modal-title", "Ajout photo")); 
+    modalContent.appendChild(createElement("h1", "modal-title", "Ajout photo"));
+     
     // Ajouter une image par défaut
     const defaultImage = createElement("img", "default-image");
     defaultImage.src = "./assets/icons/fichier_emplacement.svg";    
@@ -217,8 +218,8 @@ switch (modalStep) {
     const defaultOption = createElement("option");
     defaultOption.value = "";
     defaultOption.text = "";
-    defaultOption.disabled = true;
-    defaultOption.selected = true;
+    defaultOption.disabled = false;
+    defaultOption.selected = false;
     modalSelectCategory.appendChild(defaultOption);
 
     for (const category in categoryMap) {

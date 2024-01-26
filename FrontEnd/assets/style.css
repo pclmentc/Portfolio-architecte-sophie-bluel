@@ -555,12 +555,7 @@ input[type="file"]::before {
     
 }
 .default-image{
+	position: relative;
 	
 
-}
-.file-info{
-	position: relative;
-    top: -52px;
-    left: 39px;
-    font-size: 12px;
 }
