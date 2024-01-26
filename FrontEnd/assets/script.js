@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const btn = document.querySelector("#mod");
   let modalStep = 0;
-  const categoryMap = { Objets: 1, Appartements: 2, Hotels_Restaurants: 3 };
+  const categoryMap = { Objets: 1, Appartements: 2, Hotels_Restaurants: 3 }; // rendre ceci dynamique
 
   btn.addEventListener("click", () => {
     UpdateModal();
@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return element;
   }
 
-  function UpdateModal() {
+function UpdateModal() {
     if (document.querySelector(".modal"))
       document.querySelector(".modal").remove();
     const modal = createElement("div", "modal");
@@ -169,80 +169,80 @@ document.addEventListener("DOMContentLoaded", () => {
       modalBtn.appendChild(iconNext);
     }      
     
-modalBtn.addEventListener("click", () => {
-  modalStep += modalStep === 0 ? 1 : -1;
-  UpdateModal();
-});
+  modalBtn.addEventListener("click", () => {
+    modalStep += modalStep === 0 ? 1 : -1;
+    UpdateModal();
+  });
 
-const modalClose = createElement("button", "close-btn", null);
-const iconClose = createElement("i", "fas", null);
-iconClose.classList.add("fa-close");
-modalClose.appendChild(iconClose);
-modalClose.addEventListener("click", () => {
-  document.querySelector(".modal").remove();
-  modalStep = 0;
-});
-
-switch (modalStep) {
-  case 0:
-    modalContent.appendChild(
-      createElement("h1", "modal-title", "Galerie photo")
-    );
-
-    // Ajouter ici la section pour afficher tous les img
-    const allImages = document.createElement("div");
-    allImages.classList.add("all-images");
-
-    // Appeler la fonction pour obtenir tous les img
-    getAllImages(allImages);
-
-    modalContent.appendChild(allImages);
-    modalContent.appendChild(createElement("hr", "modal-text", ""));
-    break;
-
-  case 1:
-    modalContent.appendChild(createElement("h1", "modal-title", "Ajout photo"));
-     
-    // Ajouter une image par défaut
-    const defaultImage = createElement("img", "default-image");
-    defaultImage.src = "./assets/icons/fichier_emplacement.svg";    
-
-    modalContent.appendChild(defaultImage);   
-    modalContent.appendChild(createElement("input", "modal-input", null)).type = "file";
-    modalContent.appendChild(createElement("h1", "file-title", "Titre"));
-    modalContent.appendChild(createElement("input", "modal-input", null)).placeholder = "";
-    modalContent.appendChild(createElement("h1", "file-title", "Catégorie"));
-    const modalSelectCategory = createElement("select", "modal-input");
-
-    // Ajouter la première option par défaut avec le titre "Catégorie"
-    const defaultOption = createElement("option");
-    defaultOption.value = "";
-    defaultOption.text = "";
-    defaultOption.disabled = false;
-    defaultOption.selected = false;
-    modalSelectCategory.appendChild(defaultOption);
-
-    for (const category in categoryMap) {
-      const option = createElement("option");
-      option.value = categoryMap[category];
-      option.textContent = category;
-      modalSelectCategory.appendChild(option);
-    }
-    modalContent.appendChild(modalSelectCategory);
-    modalContent.appendChild(createElement("hr", "modal-text", ""));
-    modalContent.appendChild(createElement("button", "modalValid","Valider"));        
-    break;
-
-  default:
+  const modalClose = createElement("button", "close-btn", null);
+  const iconClose = createElement("i", "fas", null);
+  iconClose.classList.add("fa-close");
+  modalClose.appendChild(iconClose);
+  modalClose.addEventListener("click", () => {
     document.querySelector(".modal").remove();
     modalStep = 0;
-    break;
-}
+  });
 
-modalContent.appendChild(modalBtn);
-modalContent.appendChild(modalClose);
-modal.appendChild(modalContent);
-document.body.appendChild(modal);
+  switch (modalStep) {
+    case 0:
+      modalContent.appendChild(
+        createElement("h1", "modal-title", "Galerie photo")
+      );
+
+      // Ajouter ici la section pour afficher tous les img
+      const allImages = document.createElement("div");
+      allImages.classList.add("all-images");
+
+      // Appeler la fonction pour obtenir tous les img
+      getAllImages(allImages);
+
+      modalContent.appendChild(allImages);
+      modalContent.appendChild(createElement("hr", "modal-text", ""));
+      break;
+
+    case 1:
+      modalContent.appendChild(createElement("h1", "modal-title", "Ajout photo"));
+
+      // Ajouter une image par défaut
+      const defaultImage = createElement("img", "default-image");
+      defaultImage.src = "./assets/icons/fichier_emplacement.svg";    
+
+      modalContent.appendChild(defaultImage);   
+      modalContent.appendChild(createElement("input", "modal-input", null)).type = "file";
+      modalContent.appendChild(createElement("h1", "file-title", "Titre"));
+      modalContent.appendChild(createElement("input", "modal-input", null)).placeholder = "";
+      modalContent.appendChild(createElement("h1", "file-title", "Catégorie"));
+      const modalSelectCategory = createElement("select", "modal-input");
+
+      // Ajouter la première option par défaut avec le titre "Catégorie"
+      const defaultOption = createElement("option");
+      defaultOption.value = "";
+      defaultOption.text = "";
+      defaultOption.disabled = false;
+      defaultOption.selected = false;
+      modalSelectCategory.appendChild(defaultOption);
+
+      for (const category in categoryMap) {
+        const option = createElement("option");
+        option.value = categoryMap[category];
+        option.textContent = category;
+        modalSelectCategory.appendChild(option);
+      }
+      modalContent.appendChild(modalSelectCategory);
+      modalContent.appendChild(createElement("hr", "modal-text", ""));
+      modalContent.appendChild(createElement("button", "modalValid","Valider"));        
+      break;
+
+    default:
+      document.querySelector(".modal").remove();
+      modalStep = 0;
+      break;
+  }
+
+  modalContent.appendChild(modalBtn);
+  modalContent.appendChild(modalClose);
+  modal.appendChild(modalContent);
+  document.body.appendChild(modal);
 }
 
 const validateButton = createElement("button", "modalValid", "Valider");

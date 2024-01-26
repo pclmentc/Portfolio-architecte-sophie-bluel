@@ -489,8 +489,7 @@ footer nav ul {
 input[type="file"] {
 	font-size: 1em;
 	position: relative;
-	width: 420px;
-	height: 169px;
+	
 	flex-shrink: 0;
 	border-radius: 3px;
 	background: #E8F1F6;
@@ -503,7 +502,7 @@ input[type="file"] {
 input[type="file"]::before {
 	content: "+ Ajouter une photo";
 	display: flex;
-	position: absolute;
+	position: relative;
 	left: 0;
 	top: 1px;
 	background: #CBD6DC;
@@ -556,6 +555,6 @@ input[type="file"]::before {
 }
 .default-image{
 	position: relative;
-	
+
 
 }
