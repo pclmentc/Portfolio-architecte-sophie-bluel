@@ -205,15 +205,18 @@ function UpdateModal() {
 
       // Ajouter une image par défaut
       const defaultImage = createElement("img", "default-image");
-      defaultImage.src = "./assets/icons/fichier_emplacement.svg";    
+      // defaultImage.src = "./assets/icons/fichier_emplacement.svg";    
+      const fileInput = createElement("input", "modal-input", null);
+      fileInput.type = "file";    
 
-      modalContent.appendChild(defaultImage);   
-      modalContent.appendChild(createElement("input", "modal-input", null)).type = "file";
+      modalContent.appendChild(defaultImage);
+      modalContent.appendChild(fileInput);
       modalContent.appendChild(createElement("h1", "file-title", "Titre"));
-      modalContent.appendChild(createElement("input", "modal-input", null)).placeholder = "";
+      const titleInput = createElement("input", "modal-input", null);
+      modalContent.appendChild(titleInput);
       modalContent.appendChild(createElement("h1", "file-title", "Catégorie"));
-      const modalSelectCategory = createElement("select", "modal-input");
-
+      const modalSelectCategory = createElement("select", "modal-input");        
+  
       
       // Utiliser une boucle forEach pour itérer sur les catégories de façon dynamique
       categories.forEach((category) => {
@@ -225,13 +228,20 @@ function UpdateModal() {
 
       modalContent.appendChild(modalSelectCategory);
       modalContent.appendChild(createElement("hr", "modal-text", ""));
-      modalContent.appendChild(createElement("button", "modalValid","Valider"));        
-      break;
+      const validateButton = createElement("button", "modalValid", "Valider");
+      modalContent.appendChild(validateButton);
+      
 
-    default:
-      document.querySelector(".modal").remove();
-      modalStep = 0;
-      break;
+      validateButton.addEventListener("click", () => {
+        // Créez un objet FormData pour collecter les données du formulaire
+        const formData = new FormData();
+        formData.append("image", fileInput.files[0]);
+        formData.append("title", titleInput.value);
+        formData.append("categoryId", modalSelectCategory.value);
+        // Appelez la fonction pour soumettre l'article
+        submitNewArticle(formData);
+      }); 
+      break;    
   }
 
   modalContent.appendChild(modalBtn);
@@ -239,8 +249,6 @@ function UpdateModal() {
   modal.appendChild(modalContent);
   document.body.appendChild(modal);
 }
-
-const validateButton = createElement("button", "modalValid", "Valider");
 
 // Fonction pour obtenir toutes les images
 const getAllImages = (container) => {
@@ -317,4 +325,42 @@ const deleteArticle = (articleId) => {
       console.error("Erreur lors de la suppression de l'article :", error);
     });
 };
-});
+
+// Fonction pour envoyer un nouvel article au serveur
+const submitNewArticle = (formData) => {
+  const token = window.localStorage.getItem("token");
+
+  if (!token) {
+    console.error("Token non valide. L'utilisateur n'est pas authentifié.");
+    return;
+  }  
+
+  fetch(urlWorks, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Erreur HTTP, statut : ${response.status}`);
+      }    
+      return response.json();        
+           
+    })
+    .then((data) => {
+      console.log("Article ajouté avec succès :", data);
+      // Actualisez la galerie après l'ajout
+      getArticles();
+    })
+    .catch((error) => {
+      console.error("Erreur lors de l'ajout de l'article :", error);
+      if (response) {
+        return response.json().then((errorDetails) => {
+          console.error("Détails de l'erreur :", errorDetails);
+        });
+      }
+    });
+    
+  }})
