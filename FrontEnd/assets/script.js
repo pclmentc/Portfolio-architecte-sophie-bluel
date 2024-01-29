@@ -28,19 +28,19 @@ document.addEventListener("DOMContentLoaded", () => {
     editModeBanner.classList.remove("hidden");
     modLink.classList.remove("hidden");
     filterContainer.style.visibility = "hidden";
-  } else {
+  } 
+  else {
     // L'utilisateur n'est pas connecté, rien changer.
     console.log("Utilisateur non connecté !");
     editModeBanner.classList.add("hidden");
     modLink.classList.add("hidden");
     header.classList.remove("connected");
   }
+    const urlCategories = "http://localhost:5678/api/categories";
+    const urlWorks = "http://localhost:5678/api/works";
+    const gallery = document.querySelector(".gallery");
 
-  const urlCategories = "http://localhost:5678/api/categories";
-  const urlWorks = "http://localhost:5678/api/works";
-  const gallery = document.querySelector(".gallery");
-
-  let categories = [];
+    let categories = [];
 
   // Fonction pour obtenir les catégories depuis l'API
   const getCategories = () => {
@@ -72,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
     button.classList.add("filter-btn");
     button.dataset.category = category.name;
     button.textContent = category.name;
+
     if (category.selected) {
       button.classList.add("selected");
     }
@@ -119,11 +120,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fonction pour créer un élément représentant un projet
   const createArticleElement = (project) => {
     const article = document.createElement("article");
-
     const img = document.createElement("img");
     img.src = project.imageUrl;
     img.alt = project.title;
-
     const figcaption = document.createElement("figcaption");
     figcaption.textContent = project.title;
 
@@ -141,9 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const btn = document.querySelector("#mod");
   let modalStep = 0;
 
-  btn.addEventListener("click", () => {
-    UpdateModal();
-  });
+  btn.addEventListener("click", () => {UpdateModal(); });
 
   function createElement(tag, className, textContent) {
     const element = document.createElement(tag);
@@ -157,11 +154,8 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector(".modal").remove();
     const modal = createElement("div", "modal");
     const modalContent = createElement("div", "modal-content");
+    const modalBtn = createElement("button",modalStep === 0 ? "next-btn" : "previous-btn");
 
-    const modalBtn = createElement(
-      "button",
-      modalStep === 0 ? "next-btn" : "previous-btn"
-    );
     if (modalStep === 0) {
       modalBtn.textContent = "Ajouter une photo";
     } else {
@@ -170,10 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
       modalBtn.appendChild(iconNext);
     }
 
-    modalBtn.addEventListener("click", () => {
-      modalStep += modalStep === 0 ? 1 : -1;
-      UpdateModal();
-    });
+    modalBtn.addEventListener("click", () => {modalStep += modalStep === 0 ? 1 : -1;UpdateModal();});
 
     const modalClose = createElement("button", "close-btn", null);
     const iconClose = createElement("i", "fas", null);
@@ -186,9 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     switch (modalStep) {
       case 0:
-        modalContent.appendChild(
-          createElement("h1", "modal-title", "Galerie photo")
-        );
+        modalContent.appendChild(createElement("h1", "modal-title", "Galerie photo"));
 
         // Ajouter ici la section pour afficher tous les img
         const allImages = document.createElement("div");
@@ -202,9 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
         break;
 
       case 1:
-        modalContent.appendChild(
-          createElement("h1", "modal-title", "Ajout photo")
-        );
+        modalContent.appendChild(createElement("h1", "modal-title", "Ajout photo"));
         // Créer l'élément label
         const fileInputLabel = createElement("label", "file-label", "");
         fileInputLabel.setAttribute("for", "file");
@@ -220,13 +207,9 @@ document.addEventListener("DOMContentLoaded", () => {
         
         fileInput.addEventListener("change", function () {const selectedFile = this.files[0];
 
-          if (selectedFile) {
-            defaultImage.setAttribute("src", URL.createObjectURL(selectedFile));
-            
-          } else {
-          defaultImage.setAttribute("src","./assets/icons/fichier_emplacement.svg");          
+          if (selectedFile) {defaultImage.setAttribute("src", URL.createObjectURL(selectedFile));         
+          } else {defaultImage.setAttribute("src","./assets/icons/fichier_emplacement.svg");         
     }
-
     // Appel de la fonction pour vérifier les entrées
     checkInputs();
   });
@@ -234,40 +217,34 @@ document.addEventListener("DOMContentLoaded", () => {
         // Écouter les changements dans le champ de fichier
         fileInput.addEventListener("change", function () {
           const selectedFile = this.files[0];
-
+          
           // Mettre à jour l'image dans le label avec la photo sélectionnée
           if (selectedFile) {
             const reader = new FileReader();
-            reader.onload = function (e) {
-              defaultImage.setAttribute("src", e.target.result);
-            };
+            reader.onload = function (e) {defaultImage.setAttribute("src", e.target.result);
+            // Ajouter une classe pour masquer le h1 et p
+            fileInputLabel.classList.add("file-input-selected");
+          };
             reader.readAsDataURL(selectedFile);
           } else {
             // Afficher l'image par défaut si aucun fichier n'est sélectionné
-            defaultImage.setAttribute(
-              "src",
-              "./assets/icons/fichier_emplacement.svg"
-            );
+            defaultImage.setAttribute("src","./assets/icons/fichier_emplacement.svg");
+            // Retirer la classe pour afficher le h1 et p
+            fileInputLabel.classList.remove("file-input-selected");
           }
         });
 
         // Ajouter l'input à l'intérieur du label
         fileInputLabel.appendChild(fileInput);
-        fileInputLabel.appendChild(
-          createElement("h1", "input-link", "+ Ajouter photo")
-        );
-        fileInputLabel.appendChild(
-          createElement("p", "input-comment", "jpg, png : 4mo max")
-        );
+        fileInputLabel.appendChild(createElement("h1", "input-link", "+ Ajouter photo"));
+        fileInputLabel.appendChild(createElement("p", "input-comment", "jpg, png : 4mo max"));
+
         // Ajouter le label à modalContent
         modalContent.appendChild(fileInputLabel);
-
         modalContent.appendChild(createElement("h1", "file-title", "Titre"));
         const titleInput = createElement("input", "modal-input", null);
         modalContent.appendChild(titleInput);
-        modalContent.appendChild(
-          createElement("h1", "file-title", "Catégorie")
-        );
+        modalContent.appendChild(createElement("h1", "file-title", "Catégorie"));
         const modalSelectCategory = createElement("select", "modal-input");
 
         // Fonction pour vérifier si tous les champs d'entrée requis sont remplis
