@@ -138,8 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Modale------------------------------------------------------------------------------------ //
 
   const btn = document.querySelector("#mod");
-  let modalStep = 0;
-  // const categoryMap = { Objets: 1, Appartements: 2, Hotels_Restaurants: 3 }; // rendre ceci dynamique
+  let modalStep = 0;  
 
   btn.addEventListener("click", () => {
     UpdateModal();
@@ -160,8 +159,8 @@ function UpdateModal() {
 
     const modalBtn = createElement("button", modalStep === 0 ? "next-btn" : "previous-btn");
     if (modalStep === 0) {
-      modalBtn.textContent = "Ajouter une photo";       
-          
+      modalBtn.textContent = "Ajouter une photo";      
+         
 
     } else {
       const iconNext = createElement("i", "fas",null);
@@ -202,20 +201,16 @@ function UpdateModal() {
 
     case 1:
       modalContent.appendChild(createElement("h1", "modal-title", "Ajout photo"));
-
-      // Ajouter une image par défaut
-      const defaultImage = createElement("img", "default-image");
-      // defaultImage.src = "./assets/icons/fichier_emplacement.svg";    
+                     
       const fileInput = createElement("input", "modal-input", null);
-      fileInput.type = "file";    
-
-      modalContent.appendChild(defaultImage);
+      fileInput.type = "file"; 
       modalContent.appendChild(fileInput);
       modalContent.appendChild(createElement("h1", "file-title", "Titre"));
       const titleInput = createElement("input", "modal-input", null);
       modalContent.appendChild(titleInput);
       modalContent.appendChild(createElement("h1", "file-title", "Catégorie"));
-      const modalSelectCategory = createElement("select", "modal-input");        
+      const modalSelectCategory = createElement("select", "modal-input");    
+            
   
       
       // Utiliser une boucle forEach pour itérer sur les catégories de façon dynamique
@@ -237,7 +232,7 @@ function UpdateModal() {
         const formData = new FormData();
         formData.append("image", fileInput.files[0]);
         formData.append("title", titleInput.value);
-        formData.append("categoryId", modalSelectCategory.value);
+        formData.append("category", modalSelectCategory.value);
         // Appelez la fonction pour soumettre l'article
         submitNewArticle(formData);
       }); 
@@ -334,6 +329,7 @@ const submitNewArticle = (formData) => {
     console.error("Token non valide. L'utilisateur n'est pas authentifié.");
     return;
   }  
+  console.log("Données à envoyer :", formData);
 
   fetch(urlWorks, {
     method: "POST",
