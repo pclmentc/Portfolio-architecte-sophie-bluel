@@ -201,16 +201,47 @@ function UpdateModal() {
 
     case 1:
       modalContent.appendChild(createElement("h1", "modal-title", "Ajout photo"));
-                     
+      // Créer l'élément label
+      const fileInputLabel = createElement("label", "file-label", "");               
+      fileInputLabel.setAttribute("for", "file");      
+      
+      // Ajouter une image par défaut dans le label
+      const defaultImage = createElement("img", "default-image");
+      defaultImage.setAttribute("src", "./assets/icons/fichier_emplacement.svg"); 
+      fileInputLabel.appendChild(defaultImage);
+
       const fileInput = createElement("input", "modal-input", null);
-      fileInput.type = "file"; 
-      modalContent.appendChild(fileInput);
+      fileInput.setAttribute("type", "file");
+      fileInput.setAttribute("id", "file");
+      // Écouter les changements dans le champ de fichier
+      fileInput.addEventListener("change", function() {
+      const selectedFile = this.files[0];
+  
+  // Mettre à jour l'image dans le label avec la photo sélectionnée
+  if (selectedFile) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+          defaultImage.setAttribute("src", e.target.result);
+      };
+      reader.readAsDataURL(selectedFile);
+  } else {
+      // Afficher l'image par défaut si aucun fichier n'est sélectionné
+      defaultImage.setAttribute("src", "./assets/icons/fichier_emplacement.svg");
+  }
+});
+
+      // Ajouter l'input à l'intérieur du label
+      fileInputLabel.appendChild(fileInput);
+      fileInputLabel.appendChild(createElement("h1", "input-link", "+ Ajouter photo"));
+      fileInputLabel.appendChild(createElement("p", "input-comment", "jpg, png : 4mo max"));
+      // Ajouter le label à modalContent
+      modalContent.appendChild(fileInputLabel);      
+      
       modalContent.appendChild(createElement("h1", "file-title", "Titre"));
-      const titleInput = createElement("input", "modal-input", null);
+      const titleInput = createElement("input", "modal-input", null);      
       modalContent.appendChild(titleInput);
       modalContent.appendChild(createElement("h1", "file-title", "Catégorie"));
-      const modalSelectCategory = createElement("select", "modal-input");    
-            
+      const modalSelectCategory = createElement("select", "modal-input");             
   
       
       // Utiliser une boucle forEach pour itérer sur les catégories de façon dynamique
